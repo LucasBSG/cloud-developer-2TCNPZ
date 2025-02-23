@@ -13,9 +13,8 @@
 
 Baixe o Docker Desktop no site oficial: https://www.docker.com.
 
-
 ## 🐳 Primeiros Passos com Docker
-Antes de criar o microserviço, vamos aprender alguns comandos básicos do Docker.
+Vamos aprender alguns comandos básicos do Docker.
 
 ### 1️⃣ **Verificar a instalação do Docker**
 ```bash
@@ -58,3 +57,6 @@ docker run -it ubuntu bash
 ```bash
 docker stop <CONTAINER_ID>
 ```
+
+
+
