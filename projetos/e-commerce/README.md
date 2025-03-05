@@ -10,18 +10,19 @@ O projeto está organizado em pastas, cada uma representando um microserviço es
 
 
 [cloud-developer-2TCNPZ/projetos/e-commerce](https://www.mermaidchart.com/raw/95fd97ad-40d0-444c-b5de-1797feb624c4?theme=light&version=v0.1&format=svg)
-│
-├── clientes-service/ # Módulo de Clientes e Usuários
-├── produtos-service/ # Módulo de Produtos e Categorias
-├── lojas-service/ # Módulo de Lojas
-├── pagamentos-service/ # Módulo de Formas de Pagamento
-├── pedidos-service/ # Módulo de Pedidos
-├── avaliacoes-service/ # Módulo de Avaliações e Comentários
-├── frete-service/ # Módulo de Frete
-├── api-gateway/ # API Gateway (integração dos microserviços)
-├── docker-compose.yml # Arquivo para orquestrar todos os serviços
-└── README.md # Documentação geral do projeto
 
+
+### **Descrição das Pastas**
+- **clientes-service/**: Contém o microserviço de Clientes e Usuários.
+- **produtos-service/**: Contém o microserviço de Produtos e Categorias.
+- **lojas-service/**: Contém o microserviço de Lojas.
+- **pagamentos-service/**: Contém o microserviço de Formas de Pagamento.
+- **pedidos-service/**: Contém o microserviço de Pedidos.
+- **avaliacoes-service/**: Contém o microserviço de Avaliações e Comentários.
+- **frete-service/**: Contém o microserviço de Frete.
+- **api-gateway/**: Contém o API Gateway para integração dos microserviços.
+- **docker-compose.yml**: Arquivo para orquestrar todos os serviços com Docker.
+- **README.md**: Documentação geral do projeto.
 
 Cada pasta de microserviço contém:
 - Código-fonte do microserviço.
@@ -88,7 +89,9 @@ Quando todos os microserviços estiverem na branch develop, um PR será aberto p
 
 No diretório raiz do projeto, execute:
 
+```
 docker-compose up
+```
 
 ### **4. Acessar os Microserviços**
 
@@ -109,7 +112,7 @@ feature/nome-do-microservico
 ```
 Exemplo: feature/clientes, feature/produtos, etc.
 
-## **Organização das Branches por Grupo**
+### **Organização das Branches por Grupo**
 
 Aqui está um exemplo de como as branches podem ser organizadas para cada grupo:
 
