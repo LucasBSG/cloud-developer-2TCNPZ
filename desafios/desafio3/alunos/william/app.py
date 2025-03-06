@@ -8,7 +8,7 @@ def home():
 
 @app.route('/info')
 def info():
-    return "Microserviço qual!"
+    return "Microserviço qualquercoisa!"
 
 @app.route('/status')
 def status():
