@@ -1,10 +1,12 @@
+# Importar as bibliotecas necessárias
 import os
-from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask import Flask, jsonify, render_template, request, redirect, url_for, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 
+# Configurações do Flask
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///default.db')
@@ -12,6 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+# Modelagem do banco de dados
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
@@ -22,6 +25,12 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')
+
+# Rotas
 @app.route('/')
 def home():
     form = RegistrationForm()
@@ -48,9 +57,25 @@ def register():
         return redirect(url_for('home'))
     return render_template('home.html', form=form)
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and user.password == form.password.data:
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Invalid username or password', 'error')
+    return render_template('login.html', form=form)
+
+@app.route('/dashboard')
+def dashboard():
+    return "Você está logado!"
+
 @app.before_request
 def create_tables():
     db.create_all()
 
+# Inicialização do servidor
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
