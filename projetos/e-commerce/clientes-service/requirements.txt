@@ -2,3 +2,5 @@ flask
 flask_wtf
 wtforms
 wtforms.validators
+Flask-SQLAlchemy
+psycopg2-binary
