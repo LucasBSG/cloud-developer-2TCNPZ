@@ -13,8 +13,12 @@ O projeto está organizado em pastas, cada uma representando um microserviço es
 
 
 ### **Descrição das Pastas**
-- **clientes-service/**: Contém o microserviço de Clientes e Usuários.
-- **produtos-service/**: Contém o microserviço de Produtos e Categorias.
+- **clientes-service/**: Contém o microserviço de Clientes.
+- **usuarios-service/**: Contém o microserviço deUsuários.
+- **permissoes-service/**: Contém o microserviço as Permissões.
+- **produtos-service/**: Contém o microserviço de Produtos.
+- **categorias-service/**: Contém o microserviço de Categorias.
+- **fornecedores-service/**: Contém o microserviço de Fornecedores.
 - **lojas-service/**: Contém o microserviço de Lojas.
 - **pagamentos-service/**: Contém o microserviço de Formas de Pagamento.
 - **pedidos-service/**: Contém o microserviço de Pedidos.
