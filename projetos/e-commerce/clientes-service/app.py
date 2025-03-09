@@ -1,81 +1,26 @@
-# Importar as bibliotecas necessárias
-import os
-from flask import Flask, jsonify, render_template, request, redirect, url_for, flash
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, jsonify, request, render_template_string
 
-# Configurações do Flask
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///default.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
-
-# Modelagem do banco de dados
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(150), unique=True, nullable=False)
-    password = db.Column(db.String(150), nullable=False)
-
-class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Register')
-
-class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Login')
-
-# Rotas
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    form = RegistrationForm()
-    return render_template('home.html', form=form)
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        # Aqui você pode adicionar a lógica para salvar o cliente no banco de dados
+        return jsonify({"message": f"Cliente '{nome}' com email '{email}' cadastrado com sucesso!"})
+    return render_template_string('''
+        <h1>Cadastro de Clientes</h1>
+        <form method="post">
+            Nome: <input type="text" name="nome">
+            Email: <input type="text" name="email">
+            <input type="submit" value="Cadastrar">
+        </form>
+    ''')
 
 @app.route('/status')
 def status():
     return jsonify({"status": "ok"})
 
-@app.route('/users')
-def users():
-    users = User.query.all()
-    return render_template('users.html', users=users)
-
-@app.route('/register', methods=['POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-        new_user = User(username=username, password=password)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('home'))
-    return render_template('home.html', form=form)
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user and user.password == form.password.data:
-            return redirect(url_for('dashboard'))
-        else:
-            flash('Invalid username or password', 'error')
-    return render_template('login.html', form=form)
-
-@app.route('/dashboard')
-def dashboard():
-    return "Você está logado!"
-
-@app.before_request
-def create_tables():
-    db.create_all()
-
-# Inicialização do servidor
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

@@ -7,7 +7,6 @@ WORKDIR /app
 # Copiar os arquivos para o container
 COPY requirements.txt .
 COPY app.py .
-COPY templates/ templates/
 
 # Instalar as dependências
 RUN pip install -r requirements.txt
