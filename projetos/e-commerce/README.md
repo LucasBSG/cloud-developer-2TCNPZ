@@ -122,8 +122,8 @@ Aqui está um exemplo de como as branches podem ser organizadas para cada grupo:
 
 | Grupo                     | Branch                | Pasta no Repositório   |
 |---------------------------|-----------------------|------------------------|
-| Clientes e Usuários       | `feature/clientes`    | `clientes-service/`    |
-| Produtos e Categorias     | `feature/produtos`    | `produtos-service/`    |
+| Clientes        | `feature/clientes`    | `clientes-service/`    |
+| Produtos      | `feature/produtos`    | `produtos-service/`    |
 | Lojas                     | `feature/lojas`       | `lojas-service/`       |
 | Formas de Pagamento       | `feature/pagamentos`  | `pagamentos-service/`  |
 | Pedidos                   | `feature/pedidos`     | `pedidos-service/`     |
