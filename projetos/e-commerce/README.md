@@ -14,7 +14,7 @@ O projeto está organizado em pastas, cada uma representando um microserviço es
 
 ### **Descrição das Pastas**
 - **clientes-service/**: Contém o microserviço de Clientes.
-- **usuarios-service/**: Contém o microserviço deUsuários.
+- **usuarios-service/**: Contém o microserviço de Usuários.
 - **permissoes-service/**: Contém o microserviço as Permissões.
 - **produtos-service/**: Contém o microserviço de Produtos.
 - **categorias-service/**: Contém o microserviço de Categorias.
