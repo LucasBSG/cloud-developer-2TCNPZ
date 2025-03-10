@@ -32,7 +32,7 @@ Este é o microserviço de Formas de Pagamento do projeto de e-commerce. Ele per
 
     ```bash
     python3 -m venv venv
-    source venv/bin/activate
+    source venv\Scripts\activate
     ```
 
 3. Instale as dependências:
