@@ -16,3 +16,5 @@ EXPOSE 8080
 
 # Comando para rodar o app
 CMD ["python", "app.py"]
+
+VOLUME ["/mnt/secret"]
