@@ -2,21 +2,39 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "Feature permissoes rodando!"
+class Role:
+    def __init__(self, name, permissions):
+        self.name = name
+        self.permissions = permissions
 
-@app.route('/status')
-def status():
-    return jsonify({"status": "ok"})
+    def has_permission(self, permission):
+        return permission in self.permissions
 
-@app.route('/info')
-def info():
-    return "Nossa aplicação é muito boa e concluimos o microserviço com sucesso!/n Feature permissoes finalizada!"
 
-@app.route('/permissao')
-def status():
-    return "O usuário tem permissao de acesso as features do projeto"
+class User:
+    def __init__(self, username, role):
+        self.username = username
+        self.role = role
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    def can(self, permission):
+        return self.role.has_permission(permission)
+
+# Definição de papéis
+admin_role = Role("admin", ["read", "write", "delete"])
+user_role = Role("user", ["read"])
+
+# Cadastro de usuários
+users = {
+    "admin_user": User("admin_user", admin_role),
+    "common_user": User("common_user", user_role)
+}
+
+@app.route("/permissoes/<username>/<permission>")
+def check_permission(username, permission):
+    user = users.get(username)
+    if user and user.can(permission):
+        return jsonify({"user": username, "permission": permission, "allowed": True})
+    return jsonify({"user": username, "permission": permission, "allowed": False})
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
