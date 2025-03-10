@@ -1,67 +1,45 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, request, render_template
 
 app = Flask(__name__)
 
 # Simulação de banco de dados em memória
-formas_pagamento = []
-historico_transacoes = []
+lojas = []
+produtos_lojas = []
+historico_vendas = []
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def home():
-    if request.method == 'POST':
-        cartao_credito = request.form.get('cartao')
-        boleto = request.form.get('boleto')
-        pix = request.form.get('pix')
-        
-        # Exemplo de integração fictícia com Stripe
-        if cartao_credito:
-            charge = {
-                "id": "ch_1Example",
-                "amount": 1000,
-                "currency": "brl",
-                "description": "Pagamento com cartão de crédito",
-                "status": "succeeded"
-            }
-            transacao = {"tipo": "cartao_credito", "detalhes": charge}
-            historico_transacoes.append(transacao)
-            return jsonify({"data": {"cartao_credito": charge}})
-        
-        # Exemplo de integração fictícia com PagSeguro para boleto
-        if boleto:
-            response = {
-                "payment_url": "https://pagseguro.uol.com.br/checkout/payment/boleto/1234567890"
-            }
-            transacao = {"tipo": "boleto", "detalhes": response}
-            historico_transacoes.append(transacao)
-            return jsonify({"data": {"boleto": response}})
-        
-        # Exemplo de integração fictícia com PagSeguro para PIX
-        if pix:
-            response = {
-                "payment_url": "https://pagseguro.uol.com.br/checkout/payment/pix/0987654321"
-            }
-            transacao = {"tipo": "pix", "detalhes": response}
-            historico_transacoes.append(transacao)
-            return jsonify({"data": {"pix": response}})
-        
-        return jsonify({"data": {"cartao_credito": cartao_credito, "boleto": boleto, "pix": pix}})
     return render_template('index.html')
+
+@app.route('/lojas', methods=['GET', 'POST'])
+def lojas_route():
+    if request.method == 'POST':
+        nome = request.form.get('nome')
+        descricao = request.form.get('descricao')
+        endereco = request.form.get('endereco')
+        contato = request.form.get('contato')
+        loja = {"id": len(lojas) + 1, "nome": nome, "descricao": descricao, "endereco": endereco, "contato": contato}
+        lojas.append(loja)
+        return jsonify({"message": "Loja cadastrada com sucesso", "lojas": lojas})
+    return jsonify({"lojas": lojas})
+
+@app.route('/produtos_lojas', methods=['POST'])
+def produtos_lojas_route():
+    loja_id = request.form.get('loja_id')
+    produto_id = request.form.get('produto_id')
+    produto_loja = {"loja_id": loja_id, "produto_id": produto_id}
+    produtos_lojas.append(produto_loja)
+    return jsonify({"message": "Produto associado à loja com sucesso", "produtos_lojas": produtos_lojas})
+
+@app.route('/dashboard/<int:loja_id>')
+def dashboard(loja_id):
+    vendas = [venda for venda in historico_vendas if venda.get('loja_id') == loja_id]
+    estoque = [produto for produto in produtos_lojas if produto.get('loja_id') == loja_id]
+    return jsonify({"vendas": vendas, "estoque": estoque})
 
 @app.route('/status')
 def status():
     return jsonify({"status": "ok"})
 
-@app.route('/formas_pagamento', methods=['GET', 'POST'])
-def formas_pagamento_route():
-    if request.method == 'POST':
-        nova_forma = request.form.get('forma_pagamento')
-        formas_pagamento.append(nova_forma)
-        return jsonify({"message": "Forma de pagamento cadastrada com sucesso", "formas_pagamento": formas_pagamento})
-    return jsonify({"formas_pagamento": formas_pagamento})
-
-@app.route('/historico')
-def historico():
-    return jsonify({"historico": historico_transacoes})
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8181)
+    app.run(host='0.0.0.0', port=8282)
