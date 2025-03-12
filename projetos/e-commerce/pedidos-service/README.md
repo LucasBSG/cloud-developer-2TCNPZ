@@ -19,6 +19,7 @@ Este é o micro serviço de Pedidos do projeto de e-commerce. Ele permite o cada
 
     ```bash
     git clone https://github.com/CodeCaman/cloud-developer-2TCNPZ.git
+    cd cloud-developer-2TCNPZ
     git checkout feature/pedidos
     cd projetos/e-commerce/pedidos-service
     ```
@@ -32,6 +33,8 @@ Este é o micro serviço de Pedidos do projeto de e-commerce. Ele permite o cada
     ```bash
     python3 -m venv venv
     source venv\Scripts\activate
+    ou
+    .\venv\Scripts\activate
     ```
 
 3. Instale as dependências:
@@ -55,7 +58,7 @@ Este é o micro serviço de Pedidos do projeto de e-commerce. Ele permite o cada
     ```
 3. Execute o container:
     ```sh
-    docker run -p 8080:8080 pedidos-service
+    docker run --name pedidos-service -p 8080:8080 pedidos-service
     ```
 4. O serviço estará disponível em `http://0.0.0.0:8080`.
 
