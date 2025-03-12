@@ -1,35 +1,174 @@
-# Módulo de Pedidos 🛒
+# Pedidos Service 🛒
 
-Este projeto é um serviço de cadastro de pedidos desenvolvido com Flask. Ele permite que os pedidos sejam cadastrados com nome do produto, nome do cliente e forma de pagamento 💳
+Este é o micro serviço de Pedidos do projeto de e-commerce. Ele permite o cadastro de pedidos, a verificação do status dos pedidos e a visualização do histórico de pedidos por cliente.
 
 ## Funcionalidades ✨
 
-- *Cadastro de pedidos* 📝: A rota principal (/) exibe um formulário onde os usuários podem inserir o nome do produto, nome do cliente e a forma de pagamento. Ao enviar o formulário, os dados são processados e uma mensagem de sucesso é retornada.
-- *Status do Serviço* 🟢: A rota /status retorna um JSON indicando que o serviço está funcionando corretamente.
+- Cadastro de pedidos (produto, quantidade, forma de pagamento).
+- Verificação do status dos pedidos.
+- Histórico de pedidos por cliente.
 
-## Rotas 🔄
+## Requisitos 📋
 
-- GET /: Exibe o formulário de cadastro de pedidos.
-- POST /: Processa os dados do formulário e retorna uma mensagem de sucesso.
-- GET /status: Retorna o status do serviço.
+- Python 3.7+
+- Flask
 
-## Como Executar ▶️
+## Instalação 🔧
 
-1. Certifique-se de ter o Python 🐍 e o Flask instalados.
-2. Execute o comando `python app.py` para iniciar o servidor Flask.
-3. Acesse http://localhost:8080 no seu navegador para visualizar o formulário de cadastro de pedidos.
+1. Clone o repositório:
 
-## Exemplo de Uso 🔍
+    ```bash
+    git clone https://github.com/CodeCaman/cloud-developer-2TCNPZ.git
+    git checkout feature/pedidos
+    cd projetos/e-commerce/pedidos-service
+    ```
 
-1. Acesse http://localhost:8080.
-2. Preencha o formulário com o nome do produto, nome do cliente e forma de pagamento.
-3. Clique em "Enviar" para enviar os dados.
-4. Uma mensagem de sucesso será exibida com os dados do pedido cadastrado ✅.
+## Como Rodar Localmente
+
+1. Certifique-se de ter o Python e o Flask instalados.
+   
+2. Crie um ambiente virtual e ative-o:
+
+    ```bash
+    python3 -m venv venv
+    source venv\Scripts\activate
+    ```
+
+3. Instale as dependências:
+
+    ```bash
+    pip3 install -r requirements.txt
+    ```
+
+4. Execute o serviço:
+    ```sh
+    python app.py
+    ```
+5. O serviço estará disponível em `http://0.0.0.0:8080`.
+
+## Como Rodar com Docker
+
+1. Certifique-se de ter o Docker instalado.
+2. Construa a imagem Docker:
+    ```sh
+    docker build -t pedidos-service .
+    ```
+3. Execute o container:
+    ```sh
+    docker run -p 8080:8080 pedidos-service
+    ```
+4. O serviço estará disponível em `http://0.0.0.0:8080`.
+
+## Endpoints 🔄
+
+### `GET /`
+
+Renderiza a página inicial com os formulários para cadastro de pedidos e verificação de status.
+
+### `POST /pedidos`
+
+Cadastra um novo pedido com base nos dados fornecidos no formulário.
+
+### `GET /pedidos/<int:pedido_id>`
+
+Retorna o status do pedido especificado.
+
+### `GET /clientes/<int:cliente_id>/pedidos`
+
+Retorna o histórico de pedidos do cliente especificado.
+
+### `GET /status`
+
+Retorna o status do serviço.
+
+## Exemplos de Requisições e Respostas 📬
+
+### Cadastro de Pedido
+
+**Requisição:**
+```bash
+curl -X POST http://localhost:8080/pedidos -H "Content-Type: application/json" -d '{"cliente_id": 20, "itens": [{"produto_id": 100, "quantidade": 5}], "forma_pagamento": "pix"}'
+```
+
+**Resposta:**
+
+```bash
+{
+    "id": 1
+}
+```
+
+### Verificação de Status do Pedido
+
+**Requisição:**
+
+```bash
+curl http://localhost:8080/pedidos/1
+```
+**Resposta:**
+
+```bash
+{
+    "status": "em processamento"
+}
+ou
+{
+    "status": "enviado"
+}
+ou
+{
+    "status": "entregue"
+}
+```
+
+### Ver Histórico de Pedidos por Cliente
+
+**Requisição:**
+
+```bash
+curl http://localhost:8080/clientes/20/pedidos
+```
+**Resposta:**
+
+```bash
+[
+    {
+        "id": 1,
+        "cliente_id": 20,
+        "itens": [
+            {
+                "produto_id": 100,
+                "quantidade": 5
+            }
+        ],
+        "forma_pagamento": "pix",
+        "status": "em processamento",
+        "data_criacao": "2025-03-12T15:35:02.245151"
+    }
+]
+```
+### Verificar Status do Serviço
+
+**Resposta:**
+
+```bash
+curl http://localhost:8080/status
+```
+
+**Resposta:**
+
+```bash
+{
+    "status": "ok"
+}
+```
 
 ## Estrutura do Projeto 📁
 
-- app.py: Contém a lógica principal do serviço, incluindo as rotas e o processamento dos dados do formulário.
-- README.md: Este arquivo, contendo a descrição do projeto e instruções de uso.
+- `app.py`: Contém a lógica principal do serviço, incluindo as rotas e o processamento dos dados.
+- `templates/index.html`: Página HTML para interação com o serviço.
+- `README.md`: Este arquivo, contendo a descrição do projeto e instruções de uso.
+- `requirements.txt`: Lista de dependências do projeto.
 
 ## Dependências 📦
 
@@ -41,10 +180,3 @@ Este projeto é um serviço de cadastro de pedidos desenvolvido com Flask. Ele p
 - Jinja2==3.1.6
 - MarkupSafe==3.0.2
 - Werkzeug==3.1.3
-
-## Instalação 🔧
-
-Para instalar as dependências, execute:
-
-```bash
-pip install --no-cache-dir -r requirements.txt
