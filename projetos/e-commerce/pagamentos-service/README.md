@@ -56,7 +56,7 @@ Este é o microserviço de Formas de Pagamento do projeto de e-commerce. Ele per
     ```
 3. Execute o container:
     ```sh
-    docker run -p 8181:8181 pagamentos-service
+    docker run --name pagamentos-service-container -p 8181:8181 pagamentos-service
     ```
 4. O serviço estará disponível em `http://0.0.0.0:8181`.
 
