@@ -58,7 +58,7 @@ Este é o micro serviço de Pedidos do projeto de e-commerce. Ele permite o cada
     ```
 3. Execute o container:
     ```sh
-    docker run --name pedidos-service -p 8080:8080 pedidos-service
+    docker run --name pedidos-service-container -p 8080:8080 pedidos-service
     ```
 4. O serviço estará disponível em `http://0.0.0.0:8080`.
 
