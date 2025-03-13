@@ -19,6 +19,7 @@ Este é o microserviço de Itens do projeto de e-commerce. Ele permite o cadastr
 
     ```bash
     git clone https://github.com/CodeCaman/cloud-developer-2TCNPZ.git
+    cd cloud-developer-2TCNPZ
     git checkout feature/itens
     cd projetos/e-commerce/items-service
     ```
