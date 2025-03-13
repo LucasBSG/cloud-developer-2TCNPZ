@@ -1,5 +1,5 @@
 
-# Loja Service
+# Lojas Service
 
 Este é o microserviço de lojas do projeto de e-commerce. Ele permite o cadastro de Lojas.
 
