@@ -1,15 +1,15 @@
-# Módulo de Pedidos 🛒
+# Módulo de item 🛒
 
-Este projeto é um serviço de cadastro de pedidos desenvolvido com Flask. Ele permite que os pedidos sejam cadastrados com nome do produto, nome do cliente e forma de pagamento 💳
+Este projeto é um serviço de cadastro de item desenvolvido com Flask. Ele permite que os pedidos sejam cadastrados com nome do item
 
 ## Funcionalidades ✨
 
-- *Cadastro de pedidos* 📝: A rota principal (/) exibe um formulário onde os usuários podem inserir o nome do produto, nome do cliente e a forma de pagamento. Ao enviar o formulário, os dados são processados e uma mensagem de sucesso é retornada.
+- *Cadastro de item* 📝: A rota principal (/) exibe um formulário onde os usuários podem inserir o nome do item. Ao enviar o formulário, os dados são processados e uma mensagem de sucesso é retornada.
 - *Status do Serviço* 🟢: A rota /status retorna um JSON indicando que o serviço está funcionando corretamente.
 
 ## Rotas 🔄
 
-- GET /: Exibe o formulário de cadastro de pedidos.
+- GET /: Exibe o formulário de cadastro de item.
 - POST /: Processa os dados do formulário e retorna uma mensagem de sucesso.
 - GET /status: Retorna o status do serviço.
 
