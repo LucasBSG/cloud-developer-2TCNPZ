@@ -59,7 +59,7 @@ Este é o microserviço de Lojas do projeto de e-commerce. Ele permite o cadastr
     ```
 3. Execute o container:
     ```sh
-    docker run --name lojas-service-container -p 8282:8282 lojas-service lojas-service
+    docker run --name lojas-service-container -p 8282:8282 lojas-service
     ```
 4. O serviço estará disponível em `http://0.0.0.0:8282`.
 
