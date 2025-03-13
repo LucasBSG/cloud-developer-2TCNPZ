@@ -78,7 +78,7 @@ Cadastra uma nova loja.
 **Exemplo de Requisição:**
 ```sh
 curl -X POST http://localhost:8282/lojas -d "nome=Loja A&descricao=Descrição da Loja A&endereco=Endereço da Loja A&contato=Contato da Loja A"
-
+```
 **Exemplo de Resposta:**
 ```json
 {
