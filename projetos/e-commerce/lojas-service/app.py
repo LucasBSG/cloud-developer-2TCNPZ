@@ -42,11 +42,6 @@ def dashboard(loja_id):
     estoque = [produto for produto in produtos_lojas if produto.get('loja_id') == loja_id]
     return jsonify({"vendas": vendas, "estoque": estoque})
 
-@app.route('/historico')
-def historico():
-    total_lojas = len(lojas)
-    total_produtos_associados = len(produtos_lojas)
-    return jsonify({"total_lojas": total_lojas, "total_produtos_associados": total_produtos_associados})
 
 @app.route('/status')
 def status():
