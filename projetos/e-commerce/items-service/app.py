@@ -5,6 +5,10 @@ app = Flask(__name__)
 # Simulação de banco de dados em memória
 itens = []
 
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204
+
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')

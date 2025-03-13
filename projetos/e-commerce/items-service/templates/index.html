@@ -12,7 +12,8 @@
             itemsList.innerHTML = '';
             data.itens.forEach(item => {
                 const listItem = document.createElement('li');
-                listItem.textContent = `ID: ${item.id}, Nome: ${item.nome}, Descrição: ${item.descricao}, Preço: ${item.preco}`;
+                listItem.innerHTML = `ID: ${item.id}, Nome: ${item.nome}, Descrição: ${item.descricao}, Preço: ${item.preco} 
+                <button onclick="removeItem(${item.id})">Remover</button>`;
                 itemsList.appendChild(listItem);
             });
         }
@@ -23,6 +24,15 @@
             const response = await fetch('/itens', {
                 method: 'POST',
                 body: formData
+            });
+            const data = await response.json();
+            alert(data.message);
+            fetchItems();
+        }
+
+        async function removeItem(itemId) {
+            const response = await fetch(`/itens/${itemId}`, {
+                method: 'DELETE'
             });
             const data = await response.json();
             alert(data.message);

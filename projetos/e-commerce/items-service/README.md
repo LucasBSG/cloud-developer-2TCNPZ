@@ -1,50 +1,100 @@
-# Módulo de item 🛒
+# Módulo de Itens 
 
-Este projeto é um serviço de cadastro de item desenvolvido com Flask. Ele permite que os pedidos sejam cadastrados com nome do item
+Este é o microserviço de Itens do projeto de e-commerce. Ele permite o cadastro de itens, a visualização dos itens cadastrados e a atualização ou remoção de itens.
 
-## Funcionalidades ✨
+## Funcionalidades 
 
-- *Cadastro de item* 📝: A rota principal (/) exibe um formulário onde os usuários podem inserir o nome do item. Ao enviar o formulário, os dados são processados e uma mensagem de sucesso é retornada.
-- *Status do Serviço* 🟢: A rota /status retorna um JSON indicando que o serviço está funcionando corretamente.
+- Cadastro de itens (nome, descrição, preço).
+- Visualização dos itens cadastrados.
+- Atualização e remoção de itens.
 
-## Rotas 🔄
+## Requisitos
 
-- GET /: Exibe o formulário de cadastro de item.
-- POST /: Processa os dados do formulário e retorna uma mensagem de sucesso.
-- GET /status: Retorna o status do serviço.
+- Python 3.7+
+- Flask
 
-## Como Executar ▶️
+## Instalação
 
-1. Certifique-se de ter o Python 🐍 e o Flask instalados.
-2. Execute o comando `python app.py` para iniciar o servidor Flask.
-3. Acesse http://localhost:8080 no seu navegador para visualizar o formulário de cadastro de pedidos.
+1. Clone o repositório:
 
-## Exemplo de Uso 🔍
+    ```bash
+    git clone https://github.com/CodeCaman/cloud-developer-2TCNPZ.git
+    git checkout feature/itens
+    cd projetos/e-commerce/items-service
+    ```
 
-1. Acesse http://localhost:8080.
-2. Preencha o formulário com o nome do produto, nome do cliente e forma de pagamento.
-3. Clique em "Enviar" para enviar os dados.
-4. Uma mensagem de sucesso será exibida com os dados do pedido cadastrado ✅.
+## Como Rodar Localmente
 
-## Estrutura do Projeto 📁
+1. Certifique-se de ter o Python e o Flask instalados.
+   
+2. Crie um ambiente virtual e ative-o:
 
-- app.py: Contém a lógica principal do serviço, incluindo as rotas e o processamento dos dados do formulário.
-- README.md: Este arquivo, contendo a descrição do projeto e instruções de uso.
+    ```bash
+    python3 -m venv venv
+    source venv\Scripts\activate
+    ou
+    .\venv\Scripts\activate
+    ```
 
-## Dependências 📦
+3. Instale as dependências:
 
-- blinker==1.9.0
-- click==8.1.8
-- colorama==0.4.6
-- Flask==3.1.0
-- itsdangerous==2.2.0
-- Jinja2==3.1.6
-- MarkupSafe==3.0.2
-- Werkzeug==3.1.3
+    ```bash
+    pip3 install -r requirements.txt
+    ```
 
-## Instalação 🔧
+4. Execute o serviço:
+    ```sh
+    python app.py
+    ```
+5. O serviço estará disponível em `http://0.0.0.0:8383`.
 
-Para instalar as dependências, execute:
+## Como Rodar com Docker
 
-```bash
-pip install --no-cache-dir -r requirements.txt
+1. Certifique-se de ter o Docker instalado.
+2. Construa a imagem Docker:
+    ```sh
+    docker build -t items-service .
+    ```
+3. Execute o container:
+    ```sh
+    docker run --name items-service-container -p 8383:8383 items-service
+    ```
+4. O serviço estará disponível em `http://0.0.0.0:8383`.
+
+## Endpoints
+
+### `GET /`
+
+Renderiza a página inicial com o formulário para cadastro de itens e a lista de itens cadastrados.
+
+### `POST /itens`
+
+Cadastra um novo item com base nos dados fornecidos no formulário.
+
+### `GET /itens`
+
+Retorna a lista de itens cadastrados.
+
+### `GET /itens/<int:item_id>`
+
+Retorna os detalhes de um item específico.
+
+### `PUT /itens/<int:item_id>`
+
+Atualiza os dados de um item específico.
+
+### `DELETE /itens/<int:item_id>`
+
+Remove um item específico.
+
+### `GET /status`
+
+Retorna o status do serviço.
+
+## Exemplos de Requisições e Respostas
+
+### Cadastro de Item
+
+**Requisição:**
+```sh
+curl -X POST -d "nome=Item1&descricao=Descrição do Item1&preco=10.00" http://0.0.0.0:8383/itens
