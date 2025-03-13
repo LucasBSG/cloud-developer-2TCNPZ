@@ -146,23 +146,6 @@ curl http://localhost:8282/dashboard/1
 }
 ```
 
-### `GET /historico`
-
-Retorna o histórico de lojas e produtos associados.
-
-**Exemplo de Requisição:**
-```sh
-curl http://localhost:8282/historico
-```
-
-**Exemplo de Resposta:**
-```json
-{
-  "total_lojas": 1,
-  "total_produtos_associados": 1
-}
-```
-
 ### `GET /status`
 
 Retorna o status do serviço.
