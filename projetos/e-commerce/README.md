@@ -13,18 +13,11 @@ O projeto está organizado em pastas, cada uma representando um microserviço es
 
 
 ### **Descrição das Pastas**
-- **clientes-service/**: Contém o microserviço de Clientes.
-- **usuarios-service/**: Contém o microserviço de Usuários.
-- **permissoes-service/**: Contém o microserviço as Permissões.
-- **produtos-service/**: Contém o microserviço de Produtos.
-- **categorias-service/**: Contém o microserviço de Categorias.
-- **estoque-service/**: Contém o microserviço de Estoque.
-- **orcamentos-service/**: Contém o microserviço de Orçamentos.
-- **fornecedores-service/**: Contém o microserviço de Fornecedores.
+- **clientes-service/**: Contém o microserviço de Clientes e Usuários.
+- **produtos-service/**: Contém o microserviço de Produtos e Categorias.
 - **lojas-service/**: Contém o microserviço de Lojas.
 - **pagamentos-service/**: Contém o microserviço de Formas de Pagamento.
 - **pedidos-service/**: Contém o microserviço de Pedidos.
-- **items-service/**: Contém o microserviço de Items do Pedidos.
 - **avaliacoes-service/**: Contém o microserviço de Avaliações e Comentários.
 - **frete-service/**: Contém o microserviço de Frete.
 - **api-gateway/**: Contém o API Gateway para integração dos microserviços.
@@ -125,8 +118,8 @@ Aqui está um exemplo de como as branches podem ser organizadas para cada grupo:
 
 | Grupo                     | Branch                | Pasta no Repositório   |
 |---------------------------|-----------------------|------------------------|
-| Clientes        | `feature/clientes`    | `clientes-service/`    |
-| Produtos      | `feature/produtos`    | `produtos-service/`    |
+| Clientes e Usuários       | `feature/clientes`    | `clientes-service/`    |
+| Produtos e Categorias     | `feature/produtos`    | `produtos-service/`    |
 | Lojas                     | `feature/lojas`       | `lojas-service/`       |
 | Formas de Pagamento       | `feature/pagamentos`  | `pagamentos-service/`  |
 | Pedidos                   | `feature/pedidos`     | `pedidos-service/`     |
