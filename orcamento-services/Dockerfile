@@ -11,8 +11,8 @@ COPY app.py .
 # Instalar as dependências
 RUN pip install -r requirements.txt
 
-# Expor a porta 5002
-EXPOSE 5002
+# Expor a porta 5003
+EXPOSE 5003
 
 # Comando para rodar o app
 CMD ["python", "app.py"]
