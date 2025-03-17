@@ -92,6 +92,19 @@ docker run -d -p 5000:5000 --name microservico meu-microservico
 - O segundo `5000` é a porta **dentro do container**.
 - Se a porta **5000 já estiver em uso**, tente mudar para `-p 8080:5000` e acesse via `localhost:8080`.
 
+🔹 Ver detalhes do container
+
+```bash
+docker inspect microservico
+```
+
+✅ Explicação: Exibe informações detalhadas, como IP, volumes e variáveis de ambiente.
+
+🔹 Verificar logs do container
+```bash
+docker logs microservico
+```
+
 ### 3️⃣ **Testar os endpoints**
 Abra o navegador ou use `curl` para testar:
 
