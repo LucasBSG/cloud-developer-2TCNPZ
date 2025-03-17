@@ -116,3 +116,27 @@ docker stop microservico && docker rm microservico
 
 ---
 
+### 6️⃣ **Para ver e remover todas as imagens, você pode tentar**
+
+- Ver todas as imagens no sistema
+
+```bash
+docker images -a
+```
+
+- Forçar a remoção das imagens não utilizadas
+Se você quiser limpar todas as imagens que não estão sendo usadas por contêineres em execução:
+
+```bash
+docker image prune -a
+```
+
+- Esse comando remove todas as imagens não utilizadas por contêineres em execução, incluindo as que possuem tag.
+
+Caso queira remover todas as imagens, execute:
+
+```bash
+docker rmi $(docker images -q) -f
+```
+O argumento -f força a remoção das imagens, mesmo se elas estiverem em uso.
+
