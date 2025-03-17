@@ -140,3 +140,59 @@ docker rmi $(docker images -q) -f
 ```
 O argumento -f força a remoção das imagens, mesmo se elas estiverem em uso.
 
+---
+
+### 7️⃣ **Criar e rodar um container simples (consumindo CPU e memória)**
+- Crie um container que executa um loop infinito (usando a imagem alpine):
+
+```bash
+docker run -d --name stress-container alpine /bin/sh -c "while true; do :; done"
+```
+
+- Verificar o uso de recursos (CPU e memória)
+Veja o uso de recursos do container em tempo real:
+
+```bash
+docker stats stress-container
+```
+
+- Limitar os recursos do container
+Limitar o uso de CPU (por exemplo, limitar a 50% da CPU):
+
+```bash
+docker run -d --name limited-cpu --cpus="0.5" alpine /bin/sh -c "while true; do :; done"
+```
+
+- Limitar o uso de memória (por exemplo, limitar a 50MB de memória):
+
+```bash
+docker run -d --name limited-memory --memory="50m" alpine /bin/sh -c "while true; do :; done"
+```
+
+- Pausar o container
+Pausa a execução de um container, suspende seu consumo de recursos (não consome CPU nem memória):
+
+```bash
+docker pause stress-container
+```
+
+- Retomar a execução do container pausado
+Retoma a execução do container pausado:
+
+```bash
+docker unpause stress-container
+```
+
+- Parar o container
+Finaliza o container, liberando recursos de forma controlada:
+
+```bash
+docker stop stress-container
+```
+
+- Iniciar um container parado
+Inicia um container que foi parado anteriormente:
+
+```bash
+docker start stress-container
+```
