@@ -105,6 +105,19 @@ docker inspect microservico
 docker logs microservico
 ```
 
+🔹 5️⃣ Acessar o terminal do container
+```bash
+docker exec -it microservico sh
+```
+
+ou, se a imagem for baseada em Debian/Ubuntu:
+
+```bash
+docker exec -it microservico bash
+```
+✅ Explicação: Permite abrir um terminal dentro do container para executar comandos.
+
+
 ### 3️⃣ **Testar os endpoints**
 Abra o navegador ou use `curl` para testar:
 
