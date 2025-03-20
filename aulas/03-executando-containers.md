@@ -92,6 +92,38 @@ docker run -d -p 5000:5000 --name microservico meu-microservico
 - O segundo `5000` é a porta **dentro do container**.
 - Se a porta **5000 já estiver em uso**, tente mudar para `-p 8080:5000` e acesse via `localhost:8080`.
 
+🔹 Agora, vamos ver se o container está em execução:
+
+```bash
+docker ps
+```
+
+🔹 Ver detalhes do container
+
+```bash
+docker inspect microservico
+```
+
+✅ Explicação: Exibe informações detalhadas, como IP, volumes e variáveis de ambiente.
+
+🔹 Verificar logs do container
+```bash
+docker logs microservico
+```
+
+🔹 5️⃣ Acessar o terminal do container
+```bash
+docker exec -it microservico sh
+```
+
+ou, se a imagem for baseada em Debian/Ubuntu:
+
+```bash
+docker exec -it microservico bash
+```
+✅ Explicação: Permite abrir um terminal dentro do container para executar comandos.
+
+
 ### 3️⃣ **Testar os endpoints**
 Abra o navegador ou use `curl` para testar:
 
@@ -116,3 +148,83 @@ docker stop microservico && docker rm microservico
 
 ---
 
+### 6️⃣ **Para ver e remover todas as imagens, você pode tentar**
+
+- Ver todas as imagens no sistema
+
+```bash
+docker images -a
+```
+
+- Forçar a remoção das imagens não utilizadas
+Se você quiser limpar todas as imagens que não estão sendo usadas por contêineres em execução:
+
+```bash
+docker image prune -a
+```
+
+- Esse comando remove todas as imagens não utilizadas por contêineres em execução, incluindo as que possuem tag.
+
+Caso queira remover todas as imagens, execute:
+
+```bash
+docker rmi $(docker images -q) -f
+```
+O argumento -f força a remoção das imagens, mesmo se elas estiverem em uso.
+
+---
+
+### 7️⃣ **Criar e rodar um container simples (consumindo CPU e memória)**
+- Crie um container que executa um loop infinito (usando a imagem alpine):
+
+```bash
+docker run -d --name stress-container alpine /bin/sh -c "while true; do :; done"
+```
+
+- Verificar o uso de recursos (CPU e memória)
+Veja o uso de recursos do container em tempo real:
+
+```bash
+docker stats stress-container
+```
+
+- Limitar os recursos do container
+Limitar o uso de CPU (por exemplo, limitar a 50% da CPU):
+
+```bash
+docker run -d --name limited-cpu --cpus="0.5" alpine /bin/sh -c "while true; do :; done"
+```
+
+- Limitar o uso de memória (por exemplo, limitar a 50MB de memória):
+
+```bash
+docker run -d --name limited-memory --memory="50m" alpine /bin/sh -c "while true; do :; done"
+```
+
+- Pausar o container
+Pausa a execução de um container, suspende seu consumo de recursos (não consome CPU nem memória):
+
+```bash
+docker pause stress-container
+```
+
+- Retomar a execução do container pausado
+Retoma a execução do container pausado:
+
+```bash
+docker unpause stress-container
+```
+
+- Parar o container
+Finaliza o container, liberando recursos de forma controlada:
+
+```bash
+docker stop stress-container
+```
+
+- Iniciar um container parado
+Inicia um container que foi parado anteriormente:
+
+```bash
+docker start stress-container
+```
