@@ -129,6 +129,34 @@ sample_summaries = {
     }
 }
 
+# Informações dos produtos (adicionando esta estrutura para suportar as novas funções)
+sample_products = {
+    "prod-001": {
+        "id": "prod-001",
+        "name": "Smartphone Galaxy X10",
+        "category": "Eletrônicos",
+        "price": 2499.90,
+        "brand": "Samsung",
+        "description": "Smartphone com tela AMOLED de 6.5\", 128GB de armazenamento e 8GB de RAM"
+    },
+    "prod-002": {
+        "id": "prod-002",
+        "name": "Notebook ProBook Ultra",
+        "category": "Informática",
+        "price": 4899.90,
+        "brand": "HP",
+        "description": "Notebook com processador Intel i7, 16GB de RAM e SSD de 512GB"
+    },
+    "prod-003": {
+        "id": "prod-003",
+        "name": "Camiseta Casual Básica",
+        "category": "Vestuário",
+        "price": 79.90,
+        "brand": "Essentials",
+        "description": "Camiseta 100% algodão, corte regular, disponível em várias cores"
+    }
+}
+
 # Rotas do microserviço
 
 @app.route('/avaliacoes/produtos/<product_id>', methods=['GET'])
@@ -158,201 +186,13 @@ def get_product_reviews(product_id):
         'product_id': product_id
     })
 
-@app.route('/avaliacoes/produtos/<product_id>/resumo', methods=['GET'])
-def get_product_review_summary(product_id):
-    """
-    Retorna o resumo de avaliações de um produto
-    """
-    if product_id not in sample_summaries:
-        return jsonify({
-            'product_id': product_id,
-            'average_rating': 0,
-            'total_reviews': 0,
-            'distribution': {"5": 0, "4": 0, "3": 0, "2": 0, "1": 0},
-            'attribute_averages': {},
-            'message': 'Produto sem avaliações'
-        })
-    
-    return jsonify(sample_summaries[product_id])
-
-@app.route('/avaliacoes', methods=['POST'])
-def create_review():
-    """
-    Simula a criação de uma nova avaliação
-    """
-    data = request.get_json()
-    
-    # Validação básica
-    required_fields = ['id', 'product_id', 'user_id', 'title', 'rating']
-    for field in required_fields:
-        if field not in data:
-            return jsonify({'error': f'Campo obrigatório ausente: {field}'}), 400
-    
-    # Validação de classificação
-    if not 1 <= data['rating'] <= 5:
-        return jsonify({'error': 'Classificação deve ser entre 1 e 5'}), 400
-    
-    # Simula a criação (em um sistema real, salvaria no banco de dados)
-    # Todas as avaliações começam como pendentes para moderação
-    review_data = {
-        'id': data['id'],
-        'product_id': data['product_id'],
-        'user_id': data['user_id'],
-        'title': data['title'],
-        'comment': data.get('comment', ''),
-        'rating': data['rating'],
-        'review_date': datetime.now().isoformat(),
-        'photos': data.get('photos', []),
-        'helpfulness': {"likes": 0, "dislikes": 0},
-        'status': 'pending',
-        'verified_purchase': data.get('verified_purchase', False),
-        'attributes': data.get('attributes', {})
-    }
-    
-    # Em um sistema real, adicionaríamos à base de dados
-    # sample_reviews.append(review_data)
-    
-    return jsonify({
-        'id': data['id'],
-        'message': 'Avaliação criada com sucesso, aguardando moderação',
-        'status': 'pending'
-    }), 201
-
-@app.route('/avaliacoes/<review_id>/aprovar', methods=['PUT'])
-def approve_review(review_id):
-    """
-    Simula a aprovação de uma avaliação pendente
-    """
-    review = next((r for r in sample_reviews if r['id'] == review_id), None)
-    if not review:
-        return jsonify({'error': 'Avaliação não encontrada'}), 404
-    
-    if review['status'] != 'pending':
-        return jsonify({'error': 'Apenas avaliações pendentes podem ser aprovadas'}), 400
-    
-    # Simula a aprovação (em um sistema real, atualizaria no banco de dados)
-    # review['status'] = 'approved'
-    
-    return jsonify({'message': 'Avaliação aprovada com sucesso'})
-
-@app.route('/avaliacoes/<review_id>/rejeitar', methods=['PUT'])
-def reject_review(review_id):
-    """
-    Simula a rejeição de uma avaliação pendente
-    """
-    review = next((r for r in sample_reviews if r['id'] == review_id), None)
-    if not review:
-        return jsonify({'error': 'Avaliação não encontrada'}), 404
-    
-    if review['status'] != 'pending':
-        return jsonify({'error': 'Apenas avaliações pendentes podem ser rejeitadas'}), 400
-    
-    # Simula a rejeição (em um sistema real, atualizaria no banco de dados)
-    # review['status'] = 'rejected'
-    
-    return jsonify({'message': 'Avaliação rejeitada com sucesso'})
-
-@app.route('/avaliacoes/<review_id>/respostas', methods=['POST'])
-def create_review_response(review_id):
-    """
-    Simula a adição de uma resposta a uma avaliação
-    """
-    review = next((r for r in sample_reviews if r['id'] == review_id), None)
-    if not review:
-        return jsonify({'error': 'Avaliação não encontrada'}), 404
-    
-    data = request.get_json()
-    
-    # Validação básica
-    required_fields = ['id', 'user_id', 'comment']
-    for field in required_fields:
-        if field not in data:
-            return jsonify({'error': f'Campo obrigatório ausente: {field}'}), 400
-    
-    # Simula a criação da resposta (em um sistema real, salvaria no banco de dados)
-    response_data = {
-        'id': data['id'],
-        'review_id': review_id,
-        'user_id': data['user_id'],
-        'comment': data['comment'],
-        'response_date': datetime.now().isoformat(),
-        'is_seller': data.get('is_seller', False),
-        'status': 'active'
-    }
-    
-    # Em um sistema real, adicionaríamos à base de dados
-    # sample_responses.append(response_data)
-    
-    return jsonify({
-        'id': data['id'],
-        'message': 'Resposta adicionada com sucesso'
-    }), 201
-
-@app.route('/avaliacoes/<review_id>/utilidade', methods=['PATCH'])
-def update_review_helpfulness(review_id):
-    """
-    Simula a atualização da utilidade de uma avaliação (likes/dislikes)
-    """
-    review = next((r for r in sample_reviews if r['id'] == review_id), None)
-    if not review:
-        return jsonify({'error': 'Avaliação não encontrada'}), 404
-    
-    data = request.get_json()
-    current_helpfulness = dict(review['helpfulness'])
-    
-    if 'likes' in data:
-        current_helpfulness['likes'] = data['likes']
-    if 'dislikes' in data:
-        current_helpfulness['dislikes'] = data['dislikes']
-    
-    # Simula a atualização (em um sistema real, atualizaria no banco de dados)
-    # review['helpfulness'] = current_helpfulness
-    
-    return jsonify({
-        'helpfulness': current_helpfulness,
-        'message': 'Utilidade atualizada com sucesso'
-    })
-
-@app.route('/avaliacoes/usuarios/<user_id>', methods=['GET'])
-def get_user_reviews(user_id):
-    """
-    Retorna todas as avaliações de um usuário
-    """
-    reviews = [r for r in sample_reviews if r['user_id'] == user_id]
-    
-    return jsonify([{
-        'id': review['id'],
-        'product_id': review['product_id'],
-        'title': review['title'],
-        'rating': review['rating'],
-        'review_date': review['review_date'],
-        'status': review['status']
-    } for review in reviews])
-
-@app.route('/avaliacoes/pendentes', methods=['GET'])
-def get_pending_reviews():
-    """
-    Retorna todas as avaliações pendentes de moderação
-    """
-    reviews = [r for r in sample_reviews if r['status'] == 'pending']
-    
-    return jsonify([{
-        'id': review['id'],
-        'product_id': review['product_id'],
-        'user_id': review['user_id'],
-        'title': review['title'],
-        'comment': review['comment'],
-        'rating': review['rating'],
-        'review_date': review['review_date']
-    } for review in reviews])
-
 # Rota para verificar a saúde do serviço
 @app.route('/health', methods=['GET'])
 def health_check():
     """
     Endpoint para verificação de saúde do serviço
     """
-    return jsonify({'status': 'ok', 'service': 'reviews'})
+    return jsonify({'status': 'ok', 'service': 'avaliações'})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=6003)
+    app.run(host='0.0.0.0', port=6001)
