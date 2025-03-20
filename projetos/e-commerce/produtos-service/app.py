@@ -73,7 +73,7 @@ sample_price_history = {
 
 # Rotas do microserviço
 
-@app.route('/products', methods=['GET'])
+@app.route('/produtos', methods=['GET'])
 def get_all_products():
     """
     Retorna todos os produtos
@@ -88,7 +88,7 @@ def get_all_products():
         'status': product['status']
     } for product in sample_products])
 
-@app.route('/products/<product_id>', methods=['GET'])
+@app.route('/produtos/<product_id>', methods=['GET'])
 def get_product(product_id):
     """
     Retorna um produto específico pelo ID
@@ -98,112 +98,13 @@ def get_product(product_id):
         return jsonify(product)
     return jsonify({'error': 'Produto não encontrado'}), 404
 
-@app.route('/products', methods=['POST'])
-def create_product():
-    """
-    Simula a criação de um novo produto
-    """
-    data = request.get_json()
-    
-    # Validação básica
-    required_fields = ['id', 'name', 'price', 'category_id', 'supplier_id', 'sku']
-    for field in required_fields:
-        if field not in data:
-            return jsonify({'error': f'Campo obrigatório ausente: {field}'}), 400
-    
-    # Simula a criação (em um sistema real, salvaria no banco de dados)
-    return jsonify({
-        'id': data['id'],
-        'message': 'Produto criado com sucesso'
-    }), 201
-
-@app.route('/products/category/<category_id>', methods=['GET'])
-def get_products_by_category(category_id):
-    """
-    Retorna produtos por categoria
-    """
-    products = [p for p in sample_products if p['category_id'] == category_id]
-    return jsonify([{
-        'id': product['id'],
-        'name': product['name'],
-        'price': product['price'],
-        'stock': product['stock'],
-        'status': product['status']
-    } for product in products])
-
-@app.route('/products/supplier/<supplier_id>', methods=['GET'])
-def get_products_by_supplier(supplier_id):
-    """
-    Retorna produtos por fornecedor
-    """
-    products = [p for p in sample_products if p['supplier_id'] == supplier_id]
-    return jsonify([{
-        'id': product['id'],
-        'name': product['name'],
-        'price': product['price'],
-        'stock': product['stock'],
-        'status': product['status']
-    } for product in products])
-
-@app.route('/products/<product_id>/stock', methods=['PATCH'])
-def update_stock(product_id):
-    """
-    Simula a atualização de estoque de um produto
-    """
-    product = next((p for p in sample_products if p['id'] == product_id), None)
-    if not product:
-        return jsonify({'error': 'Produto não encontrado'}), 404
-    
-    data = request.get_json()
-    
-    if 'stock' not in data:
-        return jsonify({'error': 'Campo stock é obrigatório'}), 400
-    
-    # Simula a atualização (em um sistema real, atualizaria no banco de dados)
-    return jsonify({
-        'id': product_id,
-        'stock': data['stock'],
-        'message': 'Estoque atualizado com sucesso'
-    })
-
-@app.route('/products/<product_id>/price', methods=['PATCH'])
-def update_price(product_id):
-    """
-    Simula a atualização de preço de um produto
-    """
-    product = next((p for p in sample_products if p['id'] == product_id), None)
-    if not product:
-        return jsonify({'error': 'Produto não encontrado'}), 404
-    
-    data = request.get_json()
-    
-    if 'price' not in data:
-        return jsonify({'error': 'Campo price é obrigatório'}), 400
-    
-    # Simula a atualização (em um sistema real, atualizaria no banco de dados)
-    return jsonify({
-        'id': product_id,
-        'price': data['price'],
-        'message': 'Preço atualizado com sucesso'
-    })
-
-@app.route('/products/<product_id>/price_history', methods=['GET'])
-def get_price_history(product_id):
-    """
-    Retorna o histórico de preços de um produto
-    """
-    if product_id not in sample_price_history:
-        return jsonify([])
-    
-    return jsonify(sample_price_history[product_id])
-
 # Rota para verificar a saúde do serviço
 @app.route('/health', methods=['GET'])
 def health_check():
     """
     Endpoint para verificação de saúde do serviço
     """
-    return jsonify({'status': 'ok', 'service': 'products'})
+    return jsonify({'status': 'ok', 'service': 'produtos'})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=6002)
+    app.run(host='0.0.0.0', port=6004)
