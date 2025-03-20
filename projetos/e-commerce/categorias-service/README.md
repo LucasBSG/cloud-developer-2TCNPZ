@@ -4,7 +4,7 @@ Sistema de e-commerce baseado em microserviços para gerenciamento de produtos, 
 
 ## Arquitetura de Microserviços
 
-![Microservices](assets/projeto/imagens/microservices.png)
+![Microservices](assets/imagens/microservices.png)
 
 O projeto é composto por quatro microserviços independentes que se comunicam entre si:
 
