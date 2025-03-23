@@ -79,3 +79,24 @@ Após mesclar, envie as alterações para o fork no GitHub:
 ```
 git push origin main
 ```
+
+## 🔙 2. Revertendo o Merge pelo Git (Se não houver botão "Revert")
+
+1. Pegue o hash do merge commit:
+
+```
+git log --oneline
+```
+
+2. Reverta o merge:
+
+```
+git revert -m 1 <hash_do_merge>
+```
+O -m 1 indica que queremos manter o histórico da main e desfazer as mudanças da feature/fornecedores.
+
+3. Envie a reversão para o repositório remoto:
+
+```
+git push origin main
+```
