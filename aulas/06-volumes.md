@@ -38,6 +38,25 @@ docker attach ubuntu
 > Para evitar isso, use o atalho Ctrl + P + Ctrl + Q ou o método docker exec.
 
 
+🔹 Método 1: Abrindo diretamente o arquivo JSON
+Pressione Ctrl + Shift + P para abrir a paleta de comandos.
+
+Digite "Preferences: Open Keyboard Shortcuts (JSON)" e selecione a opção.
+
+O VS Code abrirá o arquivo keybindings.json.
+
+Procure por uma linha com "key": "ctrl+q" e remova ou comente (//) essa configuração.
+
+Salve (Ctrl + S) e feche o arquivo.
+
+🔹 Método 2: Pelo Editor Gráfico de Atalhos
+Pressione Ctrl + Shift + P e procure por "Keyboard Shortcuts".
+
+Na barra de busca que aparece, digite Ctrl + Q.
+
+Clique com o botão direito na configuração e escolha "Remove Keybinding".
+
+
 
 ## Usando Bind Mounts
 
