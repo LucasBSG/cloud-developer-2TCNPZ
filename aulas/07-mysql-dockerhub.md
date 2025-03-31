@@ -19,11 +19,26 @@ docker run -d --name ecommerce-mysql \
 
 ```
 
+```
 docker cp /Users/camanducci/fiap/cloud-developer-2TCNPZ/projetos/e-commerce/database/init.sql ecommerce-mysql:/docker-entrypoint-initdb.d/init.sql
+```
 
+```
 docker exec -it ecommerce-mysql bash
 
 docker exec -it ecommerce-mysql mysql -u root -p
+```
+
+## Copiar script e rodar no banco de dados "mysql>"
+
+
+```
+use ecommerce_db;
+
+show tables;
+
+select * from clientes;
+```
 
 >> Subindo script do banco automaticamente.
 
@@ -59,13 +74,6 @@ docker logs ecommerce-mysql
 docker exec -it ecommerce-mysql mysql -u root -p ecommerce_db < /Users/camanducci/fiap/cloud-developer-2TCNPZ/projetos/e-commerce/database/init.sql
 ```
 
-```
-use ecommerce_db;
-
-show tables;
-
-select * from clientes;
-```
 
  # Exemplo passo a passo de uso do docker tag:
 
