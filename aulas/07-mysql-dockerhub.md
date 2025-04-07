@@ -3,11 +3,11 @@
 Agora, montaremos o volume e subiremos o banco de dados com Docker:
 
 
-```
+```bash
 docker volume create ecommerce-mysql-data
 ```
 
-```
+```bash
 docker run -d --name ecommerce-mysql \
   -e MYSQL_ROOT_PASSWORD=root \
   -e MYSQL_DATABASE=ecommerce_db \
@@ -19,20 +19,32 @@ docker run -d --name ecommerce-mysql \
 
 ```
 
-```
+```bash
 docker cp /Users/camanducci/fiap/cloud-developer-2TCNPZ/projetos/e-commerce/database/init.sql ecommerce-mysql:/docker-entrypoint-initdb.d/init.sql
 ```
 
-```
+```bash
 docker exec -it ecommerce-mysql bash
+```
 
+```bash
+mysql -u root -p
+
+```
+
+```sql
+use ecommerce_db;
+show tables;
+source /docker-entrypoint-initdb.d/init.sql;
+```
+
+```bash
 docker exec -it ecommerce-mysql mysql -u root -p
 ```
 
-## Copiar script e rodar no banco de dados "mysql>"
+## Ou Copiar script e rodar no banco de dados "mysql>"
 
-
-```
+```sql
 use ecommerce_db;
 
 show tables;
@@ -108,6 +120,16 @@ A tag é composta pelo seu nome de usuário no Docker Hub, seguido do nome do re
 ```
 docker tag ecommerce-mysql your-username/ecommerce-mysql:v1
 ```
+
+##  Criação manual (mais comum)
+Acesse hub.docker.com, vá em:
+
+→ Repositories → Create Repository
+Escolha:
+
+Nome (ex: minha-api)
+
+Visibilidade (público ou privado)
 
 Aqui, substitua your-username pelo seu nome de usuário e v1 pela versão desejada.
 
