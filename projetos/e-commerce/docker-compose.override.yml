@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   db:
-    image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=ecommerce_dev
@@ -12,13 +11,17 @@ services:
       - ecommerce-network
 
   clientes-service:
-    build: clientes-service
+    build:
+      context: ./clientes-service
+    environment:
+      - DEBUG=true
+    volumes:
+      - clientes-service:/app
+      - clientes-logs:/app/logs
     ports:
       - "8081:8080"
     networks:
       - ecommerce-network
-    volumes:
-      - clientes-service:/app
 
 networks:
   ecommerce-network:
@@ -26,3 +29,4 @@ networks:
 
 volumes:
   clientes-service:
+  clientes-logs:
