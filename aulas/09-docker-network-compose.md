@@ -180,9 +180,43 @@ docker exec -it containerA /bin/bash
 ```
 Entra no container de forma interativa com terminal bash
 
-## Docker Compose
+## Docker Compose 🚀 
 
-Construir e iniciar serviços
+### Sobe os containers definidos no docker-compose.yml (e no override, se houver).
+ 
+ ```bash
+docker-compose up
+```
+
+### Com -d: roda em background (modo detached)
+
+docker-compose up -d
+
+
+### Para e remove todos os containers, redes e volumes anônimos criados pelo Compose.
+
+ ```bash
+docker-compose down
+```
+
+### Com --volumes: remove volumes também
+
+```bash
+docker-compose down --volumes
+```
+
+### Faz o build das imagens a partir dos Dockerfiles.
+```bash
+docker-compose build
+```
+
+### Força rebuild, mesmo sem alterações:
+ 
+```bash
+docker-compose build --no-cache
+```
+
+### Construir e iniciar serviços
 
 ```bash
 docker-compose up --build
@@ -194,8 +228,64 @@ docker-compose up --build
 
 ```bash
 docker-compose logs
+
+docker-compose logs -f # Segue os logs em tempo real
 ```
 - Mostra os logs de todos os serviços definidos no docker-compose.yml
+
+
+### Apenas pausa ou reinicia containers (sem remover).
+
+```bash
+docker-compose stop   # Para os containers
+docker-compose start  # Reinicia os containers parados
+```
+
+### Para e inicia novamente os containers.
+
+```bash
+docker-compose restart
+```
+
+### Executa um comando dentro de um container já rodando (como docker exec).
+
+```bash
+docker-compose exec produtos sh     # Entra no shell
+docker-compose exec produtos ls -l  # Roda comando
+```
+Obs: O container precisa estar ativo (up)
+
+
+### Roda um comando único em um container, mesmo que o serviço não esteja em up.
+
+```bash
+docker-compose run produtos bash
+```
+
+### Lista os containers que estão rodando no contexto do Compose atual.
+ 
+```bash
+docker-compose ps
+```
+
+### Valida e mostra a configuração final (útil para debug de override.yml).
+
+```bash
+docker-compose config
+```
+
+### Mostra os processos ativos dentro dos containers.
+
+```bash
+docker-compose top
+``` 
+
+### Puxa ou envia imagens de/para um registry (Docker Hub, GitHub, etc.).
+
+```bash
+docker-compose pull
+docker-compose push
+``` 
 
 ## Gerenciamento de Código
 
