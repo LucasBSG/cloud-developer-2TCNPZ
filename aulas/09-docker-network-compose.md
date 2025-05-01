@@ -287,6 +287,38 @@ docker-compose pull
 docker-compose push
 ``` 
 
+## docker-compose.override.yml em DEV
+
+Vantagens de usar docker-compose.yml limpo e genérico (base de produção)
+
+E um docker-compose.override.yml com configurações específicas para desenvolvimento:
+
+- Montagem de volumes locais
+- Variáveis de ambiente
+- Comandos de debug
+- Hot reload
+
+Cada desenvolvedor pode manter um override para trabalhar com seu ambiente sem modificar o compose.yml principal.
+Evita alterar arquivos de produção acidentalmente.
+Separação de preocupações (infra vs dev)
+É um passo para DevOps real (CI/CD, staging, etc.)
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+``` 
+Ou usar perfis do Compose (desde v3.9+):
+
+```bash
+services:
+  clientes:
+    ...
+    profiles:
+      - dev
+```
+```bash
+COMPOSE_PROFILES=dev docker-compose up
+```
+
 ## Gerenciamento de Código
 
 ### Atualizar repositório local
