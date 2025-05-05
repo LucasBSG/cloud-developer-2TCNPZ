@@ -97,7 +97,8 @@ Quando todos os microserviços estiverem na branch develop, um PR será aberto p
 No diretório raiz do projeto, execute:
 
 ```
-docker-compose up
+docker-compose --env-file .env -f docker-compose.yml -f docker-compose.dev.yml up -d
+docker-compose --env-file .env -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
 ### **4. Acessar os Microserviços**

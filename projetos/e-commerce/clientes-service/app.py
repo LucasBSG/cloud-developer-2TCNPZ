@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request, render_template_string
+import os
 
 app = Flask(__name__)
+env = os.getenv("APP_ENV", "default")
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -8,7 +10,7 @@ def home():
         nome = request.form['nome']
         email = request.form['email']
         # Aqui você pode adicionar a lógica para salvar o cliente no banco de dados
-        return jsonify({"message": f"Cliente '{nome}' com email '{email}' cadastrado com sucesso!"})
+        return jsonify({"message": f"Cliente '{nome}' com email '{email}' cadastrado com sucesso! '{env}' "})
     return render_template_string('''
         <h1>Cadastro de Clientes</h1>
         <form method="post">

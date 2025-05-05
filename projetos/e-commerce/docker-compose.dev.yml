@@ -1,0 +1,19 @@
+services:
+  db:
+    environment:
+      - MYSQL_DATABASE=ecommerce_dev
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3307:3306"  # mantido ou alterado se houver conflito local
+
+  clientes-service:
+    build:
+      context: ./clientes-service
+      dockerfile: Dockerfile.dev  # caso tenha um Dockerfile com ferramentas de dev
+    environment:
+      - APP_ENV=dev
+      - FLASK_ENV=development  # ativa modo debug no Flask
+    volumes:
+      - ./clientes-service:/app  # hot reload com código local
+    ports:
+      - "8081:8080"

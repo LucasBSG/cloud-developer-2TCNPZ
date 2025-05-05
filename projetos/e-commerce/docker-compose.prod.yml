@@ -1,0 +1,21 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=ecommerce_prod
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"  # exposto ou não, dependendo da infra
+    volumes:
+      - db_data:/var/lib/mysql
+
+  clientes-service:
+    image: ecommerce-clientes:1.0.0  # imagem versionada e testada
+    environment:
+      - APP_ENV=prod
+      - FLASK_ENV=prod  # não ativa modo debug no Flask
+    ports:
+      - "8080:8080"
+
+volumes:
+  db_data:
