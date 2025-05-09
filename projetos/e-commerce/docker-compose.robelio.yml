@@ -1,0 +1,71 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ecommerce_default  # será sobrescrito por dev/uat/prod
+    ports:
+      - "3306:3306"  # pode ser sobrescrito em outros ambientes
+    networks:
+      - ecommerce-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "5082:80"
+    depends_on:
+      - db
+    networks: 
+      - ecommerce-network
+    volumes:
+      - phpmyadmin_data:/sessions  # persistência de sessões
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=meubanco
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  avaliacoes-service:
+    build: avaliacoes-service
+    ports:
+      - "6001:6001"  # padrão, sobrescrito se necessário
+    networks:
+      - ecommerce-network
+    volumes:
+      - avaliacoes-service:/app  # em produção pode ser removido
+
+networks:
+  ecommerce-network:
+    driver: bridge
+
+volumes:
+  clientes-service:
+  pgdata:
+  pgadmin_data:
+  phpmyadmin_data:
+  avaliacoes-service:

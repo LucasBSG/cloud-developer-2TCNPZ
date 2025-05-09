@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir flask gunicorn
 COPY app.py .
 
 # Informa em qual porta o container estará escutando
-EXPOSE 6003
+EXPOSE 6001
 
 # Comando para iniciar o aplicativo quando o container for executado
 CMD ["gunicorn", "--bind", "0.0.0.0:6001", "app:app"]
